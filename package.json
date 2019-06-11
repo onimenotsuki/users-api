@@ -1,0 +1,11 @@
+{
+  "name": "users-crud-api",
+  "version": "0.0.1",
+  "description": "Users crud api with expressjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Edgar Talledos <onimenotsuki@gmail.com>",
+  "license": "MIT"
+}
