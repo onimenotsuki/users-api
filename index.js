@@ -29,7 +29,29 @@ app.post('/users', (req, res) => {
     .json({
       status: 200,
       message: 'Created user successfuly',
+      user: {
+        firstName, lastName, address, age,
+      },
     });
 });
+
+// app.get('/users', (req, res) => {
+//   const users = db.collection('users').get();
+//   let arr = [];
+
+//   users.then((querySnapshot) => {
+//     querySnapshot.forEach((doc, index) => {
+//       // doc.data() is never undefined for query doc snapshots
+//       // console.log(doc.data());
+
+//       arr.push(doc.data());
+//     });
+//   });
+
+//   res.status(200).json({
+//     status: 200,
+//     users: arr,
+//   });
+// });
 
 app.listen(3000, () => console.log('Server mounted in: http://localhost:3000'));
