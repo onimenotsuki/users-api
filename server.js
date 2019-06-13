@@ -44,8 +44,8 @@ app.get('/users', async (req, res) => {
   try {
     let snapshot = await usersRef.get();
     snapshot.forEach(doc => data.push({
-      info: doc.data(),
       id: doc.id,
+      info: doc.data(),
     }));
     res.status(200).json({
       status: 200,
@@ -54,12 +54,45 @@ app.get('/users', async (req, res) => {
   } catch (err) {
     res.status(400).send('Error obteniendo documentos' + err);
   }
+});
 
-  // users.get()
-  //   .then(snapshot => data = snapshot.docs)
-  //   .catch(err => res.status(400).send('Error obteniendo documentos' + err));
+app.get('/users/:id', async (req, res) => {
+  const userRef = db.collection('users').doc(req.params.id);
 
-  // res.json({ data });
+  try {
+    let doc = await userRef.get();
+
+    if (doc.exists) {
+      res.status(200).json({
+        status: 200,
+        data: {
+          id: doc.id,
+          info: doc.data(),
+        },
+      });
+    }
+
+    res.status(400).json({
+      status: 400,
+      message: `El documento: ${doc.id} no existe en la base de datos`,
+    });
+  } catch (err) {
+    res.status(500).send('Error obteniendo el documento ' + req.params.id);
+  }
+})
+
+app.delete('/users/:id', async (req, res) => {
+  const docRef = db.collection('users').doc(req.params.id);
+  const doc = await docRef.get();
+
+  if (doc.exists) {
+    docRef.delete();
+    res.status(200).send('Documento eliminado');
+    res.end();
+  }
+
+  res.status(400).send(`El documento: ${docRef.id} no existe en la Base de Datos`);
+  res.end();
 });
 
 app.listen(3000, () => console.log('Server running in port: 3000'));
