@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const uuidv4 = require('uuid/v4');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
